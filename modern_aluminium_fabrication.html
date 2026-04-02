@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Aluminium Fabrication Manthuka</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #9E7A2A;
+    --charcoal: #1A1A1A;
+    --charcoal-mid: #2E2E2E;
+    --charcoal-light: #3D3D3D;
+    --silver: #A8B5C0;
+    --silver-light: #D6E0E8;
+    --white: #F8F8F6;
+    --offwhite: #F0EDE8;
+    --text-muted: #8A8A8A;
+    --accent: #4A7FA5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--charcoal);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at top left, rgba(201,168,76,0.08), transparent 26%),
+      radial-gradient(circle at 85% 15%, rgba(74,127,165,0.08), transparent 24%),
+      radial-gradient(circle at bottom right, rgba(201,168,76,0.05), transparent 28%);
+    z-index: 0;
+  }
+
+  body > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  ::selection {
+    background: rgba(201,168,76,0.28);
+    color: var(--white);
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5%;
+    background: rgba(18,18,18,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    transition: all 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  }
+
+  nav.scrolled {
+    background: rgba(17,17,17,0.97);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    border-bottom-color: rgba(201,168,76,0.22);
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+
+  .nav-logo img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    background: var(--white);
+    flex-shrink: 0;
+  }
+
+  .logo-icon {
+    width: 40px; height: 40px;
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900; font-size: 1.1rem;
+    color: var(--gold);
+    transform: rotate(45deg);
+  }
+  .logo-icon span { transform: rotate(-45deg); display: block; }
+
+  .logo-text { line-height: 1.1; }
+  .logo-text .brand { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--gold); letter-spacing: 0.05em; }
+  .logo-text .sub { font-size: 0.68rem; color: var(--silver); letter-spacing: 0.15em; text-transform: uppercase; }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--silver-light);
+    font-size: 0.88rem; letter-spacing: 0.08em;
+    text-transform: uppercase; font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; right: 100%;
+    height: 1px; background: var(--gold); transition: right 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { right: 0; }
+
+  .nav-cta {
+    background: var(--gold); color: var(--charcoal) !important;
+    padding: 0.5rem 1.2rem !important; font-weight: 600 !important;
+    box-shadow: 0 10px 24px rgba(201,168,76,0.18);
+  }
+  .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .nav-cta::after { display: none !important; }
+
+  .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .hamburger span { width: 24px; height: 2px; background: var(--gold); transition: 0.3s; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 7rem 5% 4rem;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 40%, #0d1a26 100%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 1;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-diamond {
+    position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+    width: 600px; height: 600px;
+    border: 1px solid rgba(201,168,76,0.1);
+    transform: translateY(-50%) rotate(45deg);
+    z-index: 1;
+  }
+
+  .hero-diamond::before {
+    content: ''; position: absolute; inset: 30px;
+    border: 1px solid rgba(201,168,76,0.08);
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 720px; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 0.35rem 1rem; border-radius: 2px;
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 5rem);
+    font-weight: 900; line-height: 1.05;
+    color: var(--white); margin-bottom: 0.5rem;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero h1 .highlight {
+    color: var(--gold);
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero-tagline {
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    color: var(--silver);
+    font-weight: 300; letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+
+  .hero-desc {
+    font-size: 1rem; color: var(--text-muted);
+    line-height: 1.75; max-width: 540px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.8s 0.3s ease both; }
+
+  .btn-primary {
+    background: var(--gold); color: var(--charcoal);
+    border: none; padding: 0.85rem 2rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s; text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 12px 28px rgba(201,168,76,0.14);
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 16px 34px rgba(201,168,76,0.22); }
+
+  .btn-outline {
+    background: transparent; color: var(--white);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 0.85rem 2rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s; text-decoration: none;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 3.5rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 2rem;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .stat-item { text-align: center; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--gold); }
+  .stat-label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; }
+
+  /* SECTIONS */
+  section { padding: 6rem 5%; scroll-margin-top: 96px; position: relative; overflow: hidden; }
+  .section-label {
+    font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700; color: var(--white); line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .section-subtitle {
+    max-width: 720px;
+    color: var(--text-muted);
+    line-height: 1.75;
+  }
+
+  .about { background: linear-gradient(180deg, rgba(255,255,255,0.025), transparent 18%), var(--charcoal-mid); }
+  .services { background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent 18%), var(--charcoal); }
+  .gallery { background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent 18%), #242424; }
+  .why { background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent 18%), var(--charcoal); }
+  .reviews { background: linear-gradient(180deg, rgba(255,255,255,0.025), transparent 18%), var(--charcoal-mid); }
+  .contact { background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent 18%), var(--charcoal); }
+
+  section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-top: 1px solid rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(0,0,0,0.18);
+    z-index: 0;
+  }
+
+  section > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .service-card,
+  .review-card,
+  .photo-item,
+  .about-feature,
+  .why-item,
+  .contact-detail,
+  .contact-form,
+  .add-review,
+  .why-visual {
+    will-change: transform;
+  }
+
+  .service-card,
+  .review-card,
+  .photo-item,
+  .contact-form,
+  .add-review,
+  .why-visual,
+  .about-img,
+  .contact-map,
+  .map-placeholder,
+  .gal-item {
+    border-radius: 20px;
+  }
+
+  .service-card,
+  .review-card,
+  .about-feature,
+  .why-item,
+  .contact-detail,
+  .contact-form,
+  .add-review,
+  .why-visual,
+  .photo-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  }
+
+  .service-card:hover,
+  .review-card:hover,
+  .photo-item:hover,
+  .about-feature:hover,
+  .why-item:hover,
+  .contact-detail:hover,
+  .contact-form:hover,
+  .add-review:hover,
+  .why-visual:hover {
+    transform: translateY(-6px);
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select,
+  .contact-form,
+  .add-review,
+  .service-card,
+  .review-card,
+  .photo-item,
+  .about-feature,
+  .why-visual,
+  .contact-detail,
+  .map-placeholder {
+    box-shadow: 0 10px 26px rgba(0,0,0,0.08);
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.08);
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translate3d(0, 34px, 0) scale(0.965);
+    filter: blur(3px);
+    transition:
+      opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.9s ease;
+    will-change: opacity, transform, filter;
+  }
+  .reveal-up { transform: translate3d(0, 34px, 0) scale(0.965); }
+  .reveal-left { transform: translate3d(-42px, 28px, 0) scale(0.96); }
+  .reveal-right { transform: translate3d(42px, 28px, 0) scale(0.96); }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.16s; }
+  .reveal-delay-3 { transition-delay: 0.24s; }
+
+  .nav-links.mobile-open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(17,17,17,0.98);
+    padding: 1.25rem 5%;
+    gap: 1rem;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    box-shadow: 0 18px 30px rgba(0,0,0,0.25);
+  }
+
+  .nav-links.mobile-open a {
+    padding: 0.35rem 0;
+  }
+  .section-subtitle {
+    font-size: 1rem; color: var(--text-muted); line-height: 1.7;
+    max-width: 560px;
+  }
+
+  /* ABOUT */
+  .about { background: var(--charcoal-mid); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center; margin-top: 3rem;
+  }
+
+  .about-image-wrap {
+    position: relative;
+  }
+
+  .about-img {
+    width: 100%; aspect-ratio: 4/3;
+    background:
+      radial-gradient(circle at top, rgba(201,168,76,0.16), transparent 52%),
+      linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.18)),
+      var(--charcoal-light);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    border-radius: 22px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    padding: 0.2rem;
+    border: 1px solid rgba(201,168,76,0.08);
+  }
+
+  .about-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 18px;
+    background: transparent;
+  }
+
+  .about-img-placeholder {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 1rem; color: var(--text-muted);
+    width: 100%; height: 100%;
+  }
+  .about-img-placeholder svg { opacity: 0.3; }
+
+  .about-badge-corner {
+    position: absolute; bottom: -20px; right: -20px;
+    background: var(--gold); color: var(--charcoal);
+    padding: 1.5rem; text-align: center;
+    min-width: 130px;
+  }
+  .about-badge-corner .num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; display: block; }
+  .about-badge-corner .txt { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; }
+
+  .about-features { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 2rem; }
+  .about-feature {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1rem 1.2rem;
+    background: rgba(255,255,255,0.03);
+    border-left: 2px solid var(--gold);
+  }
+  .about-feature-icon { color: var(--gold); font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+  .about-feature h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; color: var(--white); }
+  .about-feature p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* SERVICES */
+  .services { background: var(--charcoal); }
+  .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5px;
+    background: var(--charcoal);
+    border: 1px solid rgba(201,168,76,0.08);
+  }
+
+  .service-card {
+    background: var(--charcoal);
+    padding: 2.5rem 2rem;
+    transition: background 0.3s;
+    cursor: default;
+    position: relative; overflow: hidden;
+  }
+  .service-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 100%; height: 2px;
+    background: var(--gold); transition: right 0.4s;
+  }
+  .service-card:hover { background: var(--charcoal-mid); }
+  .service-card:hover::after { right: 0; }
+
+  .service-num {
+    font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900;
+    color: var(--gold-light); position: absolute; top: 1rem; right: 1.5rem;
+    line-height: 1; user-select: none;
+    text-shadow: 0 0 8px rgba(201,168,76,0.25);
+  }
+
+  .service-icon { font-size: 2rem; margin-bottom: 1.2rem; }
+  .service-card h3 {
+    font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700;
+    color: var(--white); margin-bottom: 0.75rem;
+  }
+  .service-card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.2rem; }
+  .service-tag {
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border: 1px solid rgba(201,168,76,0.25); color: var(--gold);
+  }
+
+  /* GALLERY */
+  .gallery { background: var(--charcoal-mid); }
+  .gallery-header { margin-bottom: 2.5rem; }
+  .gallery-subtitle { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem; }
+  .gallery-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    column-count: 3;
+    column-gap: 14px;
+  }
+
+  .photo-item {
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    background: var(--charcoal-light);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(201,168,76,0.08);
+    isolation: isolate;
+    margin: 0 0 14px;
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  }
+
+  .photo-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.22));
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .photo-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.3);
+    border-color: rgba(201,168,76,0.18);
+  }
+
+  .photo-item img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    transition: transform 0.6s ease, filter 0.6s ease;
+    background: var(--charcoal);
+  }
+  .photo-item:hover img {
+    transform: scale(1.02);
+    filter: saturate(1.03) contrast(1.03);
+  }
+
+  .photo-item .photo-glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at top, rgba(201,168,76,0.08), transparent 55%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .photo-item:nth-child(1) .photo-glow { background: radial-gradient(circle at top left, rgba(201,168,76,0.14), transparent 58%); }
+  .photo-item:nth-child(2) .photo-glow { background: radial-gradient(circle at top right, rgba(201,168,76,0.10), transparent 60%); }
+  .photo-item:nth-child(3) .photo-glow { background: radial-gradient(circle at bottom left, rgba(201,168,76,0.10), transparent 58%); }
+  .photo-item:nth-child(4) .photo-glow { background: radial-gradient(circle at center, rgba(201,168,76,0.09), transparent 60%); }
+  .photo-item:nth-child(5) .photo-glow { background: radial-gradient(circle at top, rgba(201,168,76,0.12), transparent 58%); }
+  .photo-item:nth-child(6) .photo-glow { background: radial-gradient(circle at bottom right, rgba(201,168,76,0.12), transparent 58%); }
+
+  /* WHY US */
+  .why { background: var(--charcoal); }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3rem; }
+  .why-list { display: flex; flex-direction: column; gap: 2rem; }
+  .why-item { display: flex; gap: 1.5rem; align-items: flex-start; }
+  .why-num {
+    font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900;
+    color: rgba(201,168,76,0.2); line-height: 1; flex-shrink: 0; width: 50px;
+  }
+  .why-item h3 { font-size: 1.05rem; font-weight: 600; color: var(--white); margin-bottom: 0.4rem; }
+  .why-item p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+
+  .why-visual {
+    background: var(--charcoal-mid); border: 1px solid rgba(201,168,76,0.1);
+    padding: 3rem; display: flex; flex-direction: column; gap: 1.5rem;
+    position: relative;
+  }
+  .why-visual::before {
+    content: '';
+    position: absolute; top: -1px; left: 2rem; width: 60px; height: 2px; background: var(--gold);
+  }
+  .metric-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .metric-bar-wrap { flex: 1; height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
+  .metric-bar { height: 100%; background: linear-gradient(90deg, var(--gold-dark), var(--gold)); border-radius: 2px; }
+  .metric-label { font-size: 0.8rem; color: var(--text-muted); width: 120px; }
+  .metric-val { font-size: 0.85rem; color: var(--gold); font-weight: 600; width: 40px; text-align: right; }
+
+  /* REVIEWS */
+  .reviews { background: var(--charcoal-mid); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .review-card {
+    background: var(--charcoal); border: 1px solid rgba(255,255,255,0.05);
+    padding: 2rem; position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .review-card:hover { border-color: rgba(201,168,76,0.2); transform: translateY(-4px); }
+  .review-quote {
+    font-family: 'Playfair Display', serif; font-size: 4rem; color: var(--gold);
+    line-height: 0.5; margin-bottom: 1rem; opacity: 0.6;
+  }
+  .review-text { font-size: 0.9rem; color: var(--silver-light); line-height: 1.75; margin-bottom: 1.5rem; font-style: italic; }
+  .review-stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 1rem; letter-spacing: 2px; }
+  .review-author { display: flex; align-items: center; gap: 0.75rem; }
+  .review-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--charcoal-light); border: 2px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.85rem; color: var(--gold);
+  }
+  .review-author-name { font-size: 0.9rem; font-weight: 600; color: var(--white); }
+  .review-author-role { font-size: 0.75rem; color: var(--text-muted); }
+
+  /* ADD REVIEW FORM */
+  .add-review {
+    background: var(--charcoal-light); border: 1px solid rgba(201,168,76,0.15);
+    padding: 2.5rem; margin-top: 3rem;
+  }
+  .add-review h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .add-review p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .review-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--silver); }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: var(--charcoal); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--white); padding: 0.7rem 1rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; outline: none; transition: border-color 0.3s;
+    width: 100%;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-group select option { background: var(--charcoal); }
+  .form-full { grid-column: span 2; }
+  .star-select { display: flex; gap: 0.3rem; margin-top: 0.25rem; }
+  .star-btn {
+    font-size: 1.4rem; cursor: pointer; color: rgba(255,255,255,0.2);
+    transition: color 0.2s; background: none; border: none;
+  }
+  .star-btn.active { color: var(--gold); }
+
+  /* CONTACT */
+  .contact { background: var(--charcoal); }
+  .contact-wrapper {
+    display: grid; grid-template-columns: 1fr 1.4fr;
+    gap: 4rem; margin-top: 3rem; align-items: start;
+  }
+
+  .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+
+  .contact-detail {
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .contact-icon {
+    width: 44px; height: 44px; border: 1px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 1.1rem; flex-shrink: 0;
+  }
+  .contact-detail h4 { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; }
+  .contact-detail p, .contact-detail a { font-size: 0.95rem; color: var(--white); text-decoration: none; }
+  .contact-detail a:hover { color: var(--gold); }
+
+  .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-top: 0.5rem; }
+  .hour-row { display: flex; justify-content: space-between; font-size: 0.82rem; }
+  .hour-day { color: var(--text-muted); }
+  .hour-time { color: var(--silver); }
+
+  .contact-form { background: var(--charcoal-mid); border: 1px solid rgba(201,168,76,0.1); padding: 2.5rem; }
+  .contact-form h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .contact-form p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+
+  .cf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .contact-map {
+    margin-top: 1.5rem;
+    border: 1px solid rgba(201,168,76,0.15);
+    overflow: hidden;
+  }
+  .contact-map iframe {
+    width: 100%;
+    height: 320px;
+    display: block;
+    border: 0;
+  }
+  .map-placeholder {
+    height: 180px; background: var(--charcoal-light);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0.75rem; color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+  .map-pin { font-size: 2rem; }
+
+  /* FOOTER */
+  footer {
+    background: #111;
+    border-top: 1px solid rgba(201,168,76,0.12);
+    padding: 4rem 5% 2rem;
+  }
+
+  .footer-top {
+    display: grid; grid-template-columns: 1.5fr repeat(3, 1fr);
+    gap: 3rem; margin-bottom: 3rem;
+  }
+
+  .footer-brand .brand-name {
+    font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+  .footer-brand .brand-loc { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 1rem; }
+  .footer-brand p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; max-width: 260px; }
+
+  .footer-social { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+  .social-btn {
+    width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); font-size: 0.85rem;
+    cursor: pointer; transition: all 0.3s; text-decoration: none;
+  }
+  .social-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  .footer-col h4 {
+    font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.2rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-col ul li a {
+    text-decoration: none; font-size: 0.85rem; color: var(--text-muted);
+    transition: color 0.3s;
+  }
+  .footer-col ul li a:hover { color: var(--white); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem; color: var(--text-muted);
+    flex-wrap: wrap; gap: 0.5rem;
+  }
+  .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+  /* WHATSAPP FLOAT */
+  .whatsapp-float {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+    background: #25D366; color: white;
+    width: 56px; height: 56px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    cursor: pointer; transition: transform 0.3s;
+    text-decoration: none;
+    animation: pulse 2s infinite;
+  }
+  .whatsapp-float:hover { transform: scale(1.1); }
+
+  /* SCROLL TO TOP */
+  .scroll-top {
+    position: fixed; bottom: 2rem; left: 2rem; z-index: 999;
+    background: var(--charcoal-light); border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold); width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 1.1rem; transition: all 0.3s;
+    opacity: 0; pointer-events: none;
+  }
+  .scroll-top.visible { opacity: 1; pointer-events: all; }
+  .scroll-top:hover { background: var(--gold); color: var(--charcoal); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+    50% { box-shadow: 0 4px 35px rgba(37,211,102,0.7); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    nav { padding: 0.95rem 4%; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    section { padding: 4.8rem 4% 4rem; }
+
+    .hero {
+      min-height: auto;
+      padding: 6rem 4% 3rem;
+    }
+    .hero-diamond { display: none; }
+    .hero-content { max-width: 100%; }
+    .hero h1 { font-size: clamp(2.2rem, 8vw, 3.4rem); }
+    .hero-desc { max-width: 100%; }
+
+    .hero-buttons {
+      width: 100%;
+      gap: 0.75rem;
+    }
+    .hero-buttons .btn-primary,
+    .hero-buttons .btn-outline {
+      width: 100%;
+      text-align: center;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1.2rem;
+    }
+
+    .about-grid,
+    .why-grid,
+    .contact-wrapper,
+    .review-form-grid,
+    .cf-grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .about-badge-corner {
+      right: 0;
+      bottom: 0;
+      transform: translate(0, 35%);
+      min-width: 112px;
+      padding: 1rem;
+    }
+
+    .services-grid { grid-template-columns: 1fr; gap: 10px; }
+    .service-card,
+    .review-card,
+    .add-review,
+    .contact-form,
+    .why-visual { padding: 1.2rem; }
+
+    .gallery-grid { column-count: 1; column-gap: 10px; }
+    .photo-item { margin-bottom: 10px; border-radius: 16px; }
+
+    .form-full,
+    div[style*="grid-column:span 2"],
+    span[style*="grid-column:span 2"] {
+      grid-column: span 1 !important;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select,
+    .btn-primary,
+    .btn-outline {
+      min-height: 44px;
+      font-size: 0.95rem;
+    }
+
+    .contact-map iframe { height: 260px; }
+
+    .footer-top { grid-template-columns: 1fr; gap: 1.8rem; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+
+    .whatsapp-float {
+      width: 52px;
+      height: 52px;
+      right: 1rem;
+      bottom: 1rem;
+    }
+    .scroll-top {
+      left: 1rem;
+      bottom: 1rem;
+      width: 42px;
+      height: 42px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .logo-text .brand { font-size: 0.9rem; }
+    .logo-text .sub { font-size: 0.62rem; letter-spacing: 0.1em; }
+
+    .hero-badge { font-size: 0.64rem; letter-spacing: 0.14em; }
+    .hero-tagline { font-size: 0.9rem; }
+    .section-title { font-size: clamp(1.6rem, 7.8vw, 2rem); }
+    .section-subtitle { font-size: 0.9rem; }
+
+    .review-quote { font-size: 3.1rem; }
+    .review-text,
+    .service-card p,
+    .about-feature p,
+    .contact-detail p,
+    .contact-detail a { font-size: 0.88rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="logo.png" alt="Modern Aluminium Logo">
+    <div class="logo-text">
+      <div class="brand">Modern Aluminium Fabrication</div>
+      <div class="sub"> Manthuka</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-diamond"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      ✦ Manesh P John - Founder
+    </div>
+    <h1>Crafting Spaces<br>With <span class="highlight">Precision</span><br>& Elegance</h1>
+    <p class="hero-tagline">Aluminium Fabrication · Interior Designing</p>
+    <p class="hero-desc">We transform architectural visions into reality with premium aluminium fabrication and sophisticated interior design. Quality craftsmanship, delivered on time, every time.</p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn-primary">Get Free Quote</a>
+      <a href="#gallery" class="btn-outline">View Our Work</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">25+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Projects Done</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-image-wrap">
+      <div class="about-img">
+        <img src="workshop.png" alt="Workshop and showroom photo">
+      </div>
+      <div class="about-badge-corner">
+        <span class="num">25+</span>
+        <span class="txt">Years of<br>Excellence</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-label">About Us</div>
+      <h2 class="section-title">Built on Trust,<br>Driven by Craft</h2>
+      <p class="section-subtitle">Modern Aluminium Fabrication Manthuka is a full-service fabrication and interior design studio with deep roots in quality craftsmanship. From aluminium windows and doors to complete interior transformations, we deliver precision-engineered solutions with an eye for aesthetics.</p>
+      <div class="about-features">
+        <div class="about-feature">
+          <div class="about-feature-icon">⬡</div>
+          <div>
+            <h4>Premium Aluminium Systems</h4>
+            <p>We source and work with top-grade aluminium profiles for windows, doors, partitions, and custom modular kitchen and cupboard solutions that stand the test of time.</p>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">◈</div>
+          <div>
+            <h4>Bespoke Interior Design</h4>
+            <p>Our interior design team creates spaces that blend functionality with beauty — tailored to your taste and lifestyle.</p>
+          </div>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">◉</div>
+          <div>
+            <h4>Local Expertise, Professional Standards</h4>
+            <p>Proudly serving Manthuka and surrounding areas with the professionalism of a large firm and the care of a local business.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-label">What We Offer</div>
+      <h2 class="section-title">Our Services</h2>
+    </div>
+    <p style="max-width:340px;color:var(--text-muted);font-size:0.88rem;line-height:1.7">From single windows to complete interiors — we handle every detail with the same commitment to excellence.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-icon">🪟</div>
+      <h3>Aluminium Windows</h3>
+      <p>Sliding, casement, fixed and combination window systems. Thermally broken profiles available for energy efficiency.</p>
+      <div class="service-tags">
+        <span class="service-tag">Sliding</span>
+        <span class="service-tag">Casement</span>
+        <span class="service-tag">Fixed</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-icon">🚪</div>
+      <h3>Doors & Partitions</h3>
+      <p>Framed glass doors, security doors, aluminium partition walls for offices, homes and commercial spaces.</p>
+      <div class="service-tags">
+        <span class="service-tag">Swing Doors</span>
+        <span class="service-tag">Sliding Doors</span>
+        <span class="service-tag">Glass Partitions</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-icon">🏢</div>
+      <h3>Modular Kitchens & Cupboards</h3>
+      <p>Custom modular kitchen and cupboard solutions designed for smart storage, clean finishes, and everyday practicality. Tailored layouts to match your space and style.</p>
+      <div class="service-tags">
+        <span class="service-tag">Custom Fit</span>
+        <span class="service-tag">Storage</span>
+        <span class="service-tag">Home Interiors</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-icon">🛋️</div>
+      <h3>Interior Design</h3>
+      <p>Complete interior design solutions — space planning, furniture selection, lighting design, and material curation for homes and offices.</p>
+      <div class="service-tags">
+        <span class="service-tag">Residential</span>
+        <span class="service-tag">Commercial</span>
+        <span class="service-tag">Modular</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-icon">🏠</div>
+      <h3>False Ceilings & Cladding</h3>
+      <p>Aluminium grid and panel false ceiling systems, composite panel cladding, and architectural ceiling features.</p>
+      <div class="service-tags">
+        <span class="service-tag">ACP Cladding</span>
+        <span class="service-tag">Grid Ceiling</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-icon">🔧</div>
+      <h3>Repairs & Maintenance</h3>
+      <p>Professional repair and maintenance for all aluminium systems. Quick response time and genuine replacement parts.</p>
+      <div class="service-tags">
+        <span class="service-tag">Repair</span>
+        <span class="service-tag">Maintenance</span>
+        <span class="service-tag">Replacement</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-header">
+    <div class="section-label">Our Portfolio</div>
+    <h2 class="section-title">Project Gallery</h2>
+    <p class="gallery-subtitle">A selection of our completed aluminium fabrication and interior design projects.</p>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="photo-item"><img src="image1.png" alt="Project photo 1" loading="lazy"><span class="photo-glow"></span></div>
+    <div class="photo-item"><img src="image3.png" alt="Project photo 3" loading="lazy"><span class="photo-glow"></span></div>
+    <div class="photo-item"><img src="image4.png" alt="Project photo 4" loading="lazy"><span class="photo-glow"></span></div>
+    <div class="photo-item"><img src="image2.png" alt="Project photo 2" loading="lazy"><span class="photo-glow"></span></div>
+    <div class="photo-item"><img src="image6.png" alt="Project photo 6" loading="lazy"><span class="photo-glow"></span></div>
+    <div class="photo-item"><img src="image5.png" alt="Project photo 5" loading="lazy"><span class="photo-glow"></span></div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div>
+    <div class="section-label">Why Choose Us</div>
+    <h2 class="section-title">The Modern Aluminium<br>Difference</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-list">
+      <div class="why-item">
+        <div class="why-num">01</div>
+        <div>
+          <h3>Certified Quality Materials</h3>
+          <p>We use only ISI-marked and certified aluminium profiles and hardware. No shortcuts, no compromise on material quality.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">02</div>
+        <div>
+          <h3>Expert Local Team</h3>
+          <p>Skilled fabricators and designers from Manthuka who understand regional architecture, climate, and customer expectations.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">03</div>
+        <div>
+          <h3>On-Time Delivery</h3>
+          <p>We respect your schedule. Our systematic workflow ensures projects are completed on or ahead of the agreed timeline.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">04</div>
+        <div>
+          <h3>After-Sales Support</h3>
+          <p>Our relationship doesn't end at project completion. We provide warranty support and maintenance services for all our work.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-visual">
+      <p style="font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem">Customer Satisfaction Metrics</p>
+      <div class="metric-row">
+        <span class="metric-label">Work Quality</span>
+        <div class="metric-bar-wrap"><div class="metric-bar" style="width:96%"></div></div>
+        <span class="metric-val">96%</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">On-Time Delivery</span>
+        <div class="metric-bar-wrap"><div class="metric-bar" style="width:93%"></div></div>
+        <span class="metric-val">93%</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Material Quality</span>
+        <div class="metric-bar-wrap"><div class="metric-bar" style="width:98%"></div></div>
+        <span class="metric-val">98%</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Value for Money</span>
+        <div class="metric-bar-wrap"><div class="metric-bar" style="width:91%"></div></div>
+        <span class="metric-val">91%</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Would Recommend</span>
+        <div class="metric-bar-wrap"><div class="metric-bar" style="width:97%"></div></div>
+        <span class="metric-val">97%</span>
+      </div>
+      <p style="font-size:0.72rem;color:var(--text-muted);margin-top:1rem;border-top:1px solid rgba(255,255,255,0.06);padding-top:1rem">Based on customer feedback from 500+ completed projects</p>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="section-label">Testimonials</div>
+  <h2 class="section-title">What Our Clients Say</h2>
+
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-quote">"</div>
+      <p class="review-text">Absolutely brilliant work on our home renovation. The aluminium windows they installed are beautiful and the interior design team transformed our living room beyond our expectations.</p>
+      <div class="review-stars">★ ★ ★ ★ ★</div>
+      <div class="review-author">
+        <div class="review-avatar">RK</div>
+        <div>
+          <div class="review-author-name">Rajan Kumar</div>
+          <div class="review-author-role">Homeowner, Manthuka</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-quote">"</div>
+      <p class="review-text">We hired them for our entire office fit-out — partitions, windows, false ceiling, and interior design. The quality and professionalism was outstanding. Highly recommended!</p>
+      <div class="review-stars">★ ★ ★ ★ ★</div>
+      <div class="review-author">
+        <div class="review-avatar">PS</div>
+        <div>
+          <div class="review-author-name">Priya Suresh</div>
+          <div class="review-author-role">Business Owner</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-quote">"</div>
+      <p class="review-text">Got my front door replaced and a new sliding window fitted. They completed it in one day, cleaned up after themselves, and the fit is perfect. Very satisfied with the service.</p>
+      <div class="review-stars">★ ★ ★ ★ ★</div>
+      <div class="review-author">
+        <div class="review-avatar">AM</div>
+        <div>
+          <div class="review-author-name">Anil Mathew</div>
+          <div class="review-author-role">Resident, Kollam</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD REVIEW FORM -->
+  <div class="add-review" id="add-review">
+    <h3>Share Your Experience</h3>
+    <p>Had work done by us? We'd love to hear your feedback.</p>
+    <div class="review-form-grid" id="reviewForm">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="rvName" placeholder="Full name">
+      </div>
+      <div class="form-group">
+        <label>Your Rating</label>
+        <div class="star-select" id="starSelect">
+          <button class="star-btn" data-val="1">★</button>
+          <button class="star-btn" data-val="2">★</button>
+          <button class="star-btn" data-val="3">★</button>
+          <button class="star-btn" data-val="4">★</button>
+          <button class="star-btn" data-val="5">★</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Service Used</label>
+        <select id="rvService">
+          <option value="">Select service</option>
+          <option>Aluminium Windows</option>
+          <option>Doors & Partitions</option>
+          <option>Modular Kitchens & Cupboards</option>
+          <option>Interior Design</option>
+          <option>False Ceiling</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <input type="text" id="rvLocation" placeholder="Your city / area">
+      </div>
+      <div class="form-group form-full">
+        <label>Your Review</label>
+        <textarea id="rvText" placeholder="Tell us about your experience with our service..."></textarea>
+      </div>
+      <div class="form-full" style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+        <button class="btn-primary" onclick="submitReview()" style="font-size:0.85rem;padding:0.75rem 1.5rem">Submit Review</button>
+        <span id="rvMsg" style="font-size:0.85rem;color:var(--gold);display:none">✓ Thank you! Your review has been received.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-label">Get In Touch</div>
+  <h2 class="section-title">Contact Us</h2>
+  <p class="section-subtitle">Ready to start your project? Reach out for a free consultation and quote. We respond within 24 hours.</p>
+
+  <div class="contact-wrapper">
+    <div class="contact-info">
+      <div class="contact-detail">
+        <div class="contact-icon">📍</div>
+        <div>
+          <h4>Our Location</h4>
+          <p>Modern Aluminium Fabrication<br>Manthuka, Kerala, India</p>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">📞</div>
+        <div>
+          <h4>Phone / WhatsApp</h4>
+          <a href="tel:+917012495244">+91 70124 95244</a><br>
+          <a href="tel:+918078807927">+91 80788 07927</a>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <h4>Email</h4>
+          <a href="mailto:modernaluminiummanthuka@gmail.com">modernaluminiummanthuka@gmail.com</a>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <h4>Business Hours</h4>
+          <div class="hours-grid">
+            <div class="hour-row"><span class="hour-day">Mon – Sat</span><span class="hour-time">9:00 AM – 7:00 PM</span></div>
+            <div class="hour-row"><span class="hour-day">Sunday</span><span class="hour-time">By Appointment</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3937.9397271029634!2d76.66389467425417!3d9.249683585497067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b061767ada83a6f%3A0x6de6919afb941c93!2sModern%20Aluminium%20Fabrication%20work%20pandalam!5e0!3m2!1sen!2sin!4v1775119963230!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+
+    <div class="contact-form">
+      <h3>Send Us a Message</h3>
+      <p>Fill out the form and our team will contact you within 24 hours.</p>
+      <div class="cf-grid" id="contactForm">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="cfName" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" id="cfPhone" placeholder="+91 XXXXX XXXXX">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="cfEmail" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label>Service Needed</label>
+          <select id="cfService">
+            <option value="">Choose a service</option>
+            <option>Aluminium Windows</option>
+            <option>Doors & Partitions</option>
+            <option>Modular Kitchens & Cupboards</option>
+            <option>Interior Design</option>
+            <option>False Ceilings & Cladding</option>
+            <option>Repairs & Maintenance</option>
+            <option>General Inquiry</option>
+          </select>
+        </div>
+        <div class="form-group" style="grid-column:span 2">
+          <label>Project Details</label>
+          <textarea id="cfMessage" placeholder="Tell us about your project — location, size, timeline, and any specific requirements..."></textarea>
+        </div>
+        <div style="grid-column:span 2;display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+          <button class="btn-primary" onclick="submitContact()" style="font-size:0.85rem;padding:0.75rem 1.5rem">Send Message</button>
+          <a href="https://wa.me/918078807927" class="btn-outline" style="font-size:0.85rem;padding:0.75rem 1.5rem;display:inline-flex;align-items:center;gap:0.4rem">💬 WhatsApp Us</a>
+        </div>
+        <span id="cfMsg" style="grid-column:span 2;font-size:0.85rem;color:var(--gold);display:none">✓ Message sent! We'll get back to you soon.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="brand-name">Modern Aluminium Fabrication</div>
+      <div class="brand-loc">Manthuka, Kerala, India</div>
+      <p>Premium aluminium fabrication and interior design services. Crafting quality spaces with precision and passion since 2000.</p>
+      <div class="footer-social">
+        <a class="social-btn" href="https://www.facebook.com/manesh.john.2025/" title="Facebook">f</a>
+        <a class="social-btn" href="https://www.instagram.com/_manesh_john/" title="Instagram">in</a>
+        <a class="social-btn" href="https://wa.me/918078807927" title="WhatsApp">w</a>
+        <a class="social-btn" href="https://www.youtube.com/@modernaluminiummanthuka" title="YouTube">▶</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Aluminium Windows</a></li>
+        <li><a href="#services">Doors & Partitions</a></li>
+        <li><a href="#services">Modular Kitchens & Cupboards</a></li>
+        <li><a href="#services">Interior Design</a></li>
+        <li><a href="#services">False Ceilings</a></li>
+        <li><a href="#services">Repairs & Maintenance</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#why">Why Choose Us</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+918078807927">+91 80788 07927</a></li>
+        <li><a href="mailto:modernaluminiummanthuka@gmail.com">modernaluminiummanthuka@gmail.com</a></li>
+        <li><a href="https://www.google.com/maps/place/Modern+Aluminium+Fabrication/@9.483333,76.333333,15z/data=!4m2!3m1!1s0x0:0x0?hl=en" target="_blank">Manthuka, Kerala</a></li>
+        <li><a href="#" target="_blank">Mon–Sat: 9AM–6PM</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Modern Aluminium Fabrication Manthuka. All rights reserved.</span>
+    <span>Designed with ❤️ in Kerala</span>
+  </div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<a href="https://wa.me/918078807927" class="whatsapp-float" title="Chat on WhatsApp" target="_blank">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<script>
+  // SCROLL TOP
+  const scrollTopBtn = document.getElementById('scrollTop');
+  const navBar = document.querySelector('nav');
+
+  window.addEventListener('scroll', () => {
+    scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+    navBar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // REVEAL ON SCROLL
+  const revealTargets = document.querySelectorAll(
+    '.services-header, .services-grid, .service-card, .gallery-header, .photo-item, .why-grid, .why-item, .why-visual, .reviews-grid, .review-card, .add-review, .contact-wrapper, .contact-detail, .contact-form, .footer-top, .footer-bottom, .about-grid, .about-feature'
+  );
+
+  revealTargets.forEach((element, index) => {
+    element.classList.add('reveal');
+    if (element.matches('.service-card, .review-card, .photo-item, .about-feature, .why-item, .contact-detail')) {
+      element.classList.add(index % 2 === 0 ? 'reveal-left' : 'reveal-right');
+    } else {
+      element.classList.add('reveal-up');
+    }
+    if (index % 3 === 1) element.classList.add('reveal-delay-1');
+    if (index % 3 === 2) element.classList.add('reveal-delay-2');
+  });
+
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealTargets.forEach(target => revealObserver.observe(target));
+
+  // STAR RATING
+  let selectedRating = 0;
+  document.querySelectorAll('.star-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedRating = parseInt(btn.dataset.val);
+      document.querySelectorAll('.star-btn').forEach((b, i) => {
+        b.classList.toggle('active', i < selectedRating);
+      });
+    });
+    btn.addEventListener('mouseenter', () => {
+      const v = parseInt(btn.dataset.val);
+      document.querySelectorAll('.star-btn').forEach((b, i) => {
+        b.style.color = i < v ? 'var(--gold)' : '';
+      });
+    });
+    btn.addEventListener('mouseleave', () => {
+      document.querySelectorAll('.star-btn').forEach((b, i) => {
+        b.style.color = '';
+        b.classList.toggle('active', i < selectedRating);
+      });
+    });
+  });
+
+  // REVIEW SUBMIT
+  function submitReview() {
+    const name = document.getElementById('rvName').value.trim();
+    const text = document.getElementById('rvText').value.trim();
+    if (!name || !text || !selectedRating) {
+      alert('Please fill in your name, rating, and review.');
+      return;
+    }
+    const msg = document.getElementById('rvMsg');
+    msg.style.display = 'block';
+    document.getElementById('rvName').value = '';
+    document.getElementById('rvText').value = '';
+    document.getElementById('rvLocation').value = '';
+    document.getElementById('rvService').value = '';
+    selectedRating = 0;
+    document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
+    setTimeout(() => msg.style.display = 'none', 5000);
+  }
+
+  // CONTACT SUBMIT
+  function submitContact() {
+    const name = document.getElementById('cfName').value.trim();
+    const phone = document.getElementById('cfPhone').value.trim();
+    if (!name || !phone) {
+      alert('Please fill in at least your name and phone number.');
+      return;
+    }
+    const msg = document.getElementById('cfMsg');
+    msg.style.display = 'block';
+    document.getElementById('cfName').value = '';
+    document.getElementById('cfPhone').value = '';
+    document.getElementById('cfEmail').value = '';
+    document.getElementById('cfMessage').value = '';
+    document.getElementById('cfService').value = '';
+    setTimeout(() => msg.style.display = 'none', 5000);
+  }
+
+  // MOBILE NAV
+  const mobileLinks = document.querySelector('.nav-links');
+  document.querySelector('.hamburger').addEventListener('click', function() {
+    mobileLinks.classList.toggle('mobile-open');
+  });
+
+  mobileLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => mobileLinks.classList.remove('mobile-open'));
+  });
+</script>
+</body>
+</html>

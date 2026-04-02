@@ -923,6 +923,7 @@
     <li><a href="#services">Services</a></li>
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#reviews">Reviews</a></li>
+    <li><a href="admin.html" id="adminNavLink">Admin</a></li>
     <li><a href="#contact" class="nav-cta">Contact Us</a></li>
   </ul>
   <div class="hamburger">
@@ -1354,7 +1355,7 @@
           <button class="btn-primary" onclick="submitContact()" style="font-size:0.85rem;padding:0.75rem 1.5rem">Send Message</button>
           <a href="https://wa.me/918078807927" class="btn-outline" style="font-size:0.85rem;padding:0.75rem 1.5rem;display:inline-flex;align-items:center;gap:0.4rem">💬 WhatsApp Us</a>
         </div>
-        <span id="cfMsg" style="grid-column:span 2;font-size:0.85rem;color:var(--gold);display:none">✓ Message sent! We'll get back to you soon.</span>
+        <span id="cfMsg" style="grid-column:span 2;font-size:0.85rem;color:var(--gold);display:none"></span>
       </div>
     </div>
   </div>
@@ -1393,6 +1394,7 @@
         <li><a href="#reviews">Reviews</a></li>
         <li><a href="#why">Why Choose Us</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><a href="admin.html" id="adminFooterLink">Admin Login</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -1418,7 +1420,25 @@
 
 <div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
 
+<script src="config.js"></script>
 <script>
+  const configuredApiBase = String(window.WEBSITE_API_BASE || '').trim().replace(/\/$/, '');
+  const apiBase = (
+    window.location.protocol === 'file:' ||
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1'
+  )
+    ? 'http://localhost:3000'
+    : (configuredApiBase || window.location.origin);
+
+  if (configuredApiBase) {
+    const adminHref = `${configuredApiBase}/admin-login`;
+    const adminNavLink = document.getElementById('adminNavLink');
+    const adminFooterLink = document.getElementById('adminFooterLink');
+    if (adminNavLink) adminNavLink.href = adminHref;
+    if (adminFooterLink) adminFooterLink.href = adminHref;
+  }
+
   // SCROLL TOP
   const scrollTopBtn = document.getElementById('scrollTop');
   const navBar = document.querySelector('nav');
@@ -1498,21 +1518,45 @@
   }
 
   // CONTACT SUBMIT
-  function submitContact() {
+  async function submitContact() {
     const name = document.getElementById('cfName').value.trim();
     const phone = document.getElementById('cfPhone').value.trim();
+    const email = document.getElementById('cfEmail').value.trim();
+    const service = document.getElementById('cfService').value.trim();
+    const message = document.getElementById('cfMessage').value.trim();
+
     if (!name || !phone) {
       alert('Please fill in at least your name and phone number.');
       return;
     }
+
     const msg = document.getElementById('cfMsg');
-    msg.style.display = 'block';
-    document.getElementById('cfName').value = '';
-    document.getElementById('cfPhone').value = '';
-    document.getElementById('cfEmail').value = '';
-    document.getElementById('cfMessage').value = '';
-    document.getElementById('cfService').value = '';
-    setTimeout(() => msg.style.display = 'none', 5000);
+
+    try {
+      const response = await fetch(`${apiBase}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone, email, service, message })
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.error || 'Unable to send message.');
+      }
+
+      msg.textContent = result.message || 'Message sent successfully.';
+      msg.style.display = 'block';
+      document.getElementById('cfName').value = '';
+      document.getElementById('cfPhone').value = '';
+      document.getElementById('cfEmail').value = '';
+      document.getElementById('cfMessage').value = '';
+      document.getElementById('cfService').value = '';
+      setTimeout(() => msg.style.display = 'none', 5000);
+    } catch (error) {
+      msg.textContent = error.message || 'Unable to send message right now.';
+      msg.style.display = 'block';
+      setTimeout(() => msg.style.display = 'none', 5000);
+    }
   }
 
   // MOBILE NAV

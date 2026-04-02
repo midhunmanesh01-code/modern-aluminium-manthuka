@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Messages</title>
+<style>
+  :root {
+    --bg: #141414;
+    --panel: #202020;
+    --line: #333;
+    --text: #f3f3f3;
+    --muted: #bdbdbd;
+    --accent: #c9a84c;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top left, rgba(201,168,76,0.12), transparent 32%), var(--bg);
+    color: var(--text);
+  }
+
+  .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 22px 16px 36px;
+  }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+  }
+
+  .muted {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  button, .link {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 0.92rem;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  button:hover, .link:hover {
+    border-color: var(--accent);
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .stat {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--panel);
+    padding: 12px;
+  }
+
+  .stat .label {
+    color: var(--muted);
+    font-size: 0.73rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .stat .value {
+    margin-top: 6px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .error {
+    display: none;
+    border: 1px solid #7b3131;
+    color: #ffc1c1;
+    background: #4c1f1f;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+
+  .table-box {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: auto;
+    background: var(--panel);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+  }
+
+  th, td {
+    text-align: left;
+    border-bottom: 1px solid #2c2c2c;
+    padding: 10px;
+    font-size: 0.9rem;
+    vertical-align: top;
+  }
+
+  th {
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: #1a1a1a;
+  }
+
+  .msg {
+    max-width: 380px;
+    white-space: pre-wrap;
+    line-height: 1.5;
+  }
+
+  .del-btn {
+    border: 1px solid #7b3131;
+    background: #4c1f1f;
+    color: #ffc9c9;
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 0.82rem;
+    cursor: pointer;
+  }
+
+  .del-btn:hover {
+    border-color: #a64b4b;
+  }
+
+  .empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 28px;
+  }
+
+  @media (max-width: 900px) {
+    .stats { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1>Admin Messages</h1>
+        <p class="muted">Private dashboard for your contact form submissions.</p>
+      </div>
+      <div class="btn-row">
+        <button id="refreshBtn">Refresh</button>
+        <button id="logoutBtn">Logout</button>
+        <a class="link" href="index.html">Back to Site</a>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="label">Total</div>
+        <div class="value" id="totalCount">0</div>
+      </div>
+      <div class="stat">
+        <div class="label">Latest</div>
+        <div class="value" id="latestAt">-</div>
+      </div>
+      <div class="stat">
+        <div class="label">Status</div>
+        <div class="value" id="statusLabel">Loading</div>
+      </div>
+    </div>
+
+    <div class="error" id="errorBox"></div>
+
+    <div class="table-box">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Service</th>
+            <th>Message</th>
+            <th>Created</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="rows">
+          <tr><td colspan="8" class="empty">Loading messages...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script>
+    const rows = document.getElementById('rows');
+    const totalCount = document.getElementById('totalCount');
+    const latestAt = document.getElementById('latestAt');
+    const statusLabel = document.getElementById('statusLabel');
+    const errorBox = document.getElementById('errorBox');
+    const configuredApiBase = String(window.WEBSITE_API_BASE || '').trim().replace(/\/$/, '');
+    const apiBase = (
+      window.location.protocol === 'file:' ||
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1'
+    )
+      ? 'http://localhost:3000'
+      : (configuredApiBase || window.location.origin);
+
+    if (configuredApiBase && window.location.origin !== configuredApiBase) {
+      window.location.href = `${configuredApiBase}/admin`;
+    }
+
+    function esc(v) {
+      return String(v || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function fmtDate(v) {
+      if (!v) return '-';
+      const d = new Date(v);
+      return Number.isNaN(d.getTime()) ? v : d.toLocaleString();
+    }
+
+    async function loadMessages() {
+      errorBox.style.display = 'none';
+      statusLabel.textContent = 'Loading';
+      try {
+        const response = await fetch(`${apiBase}/api/messages`, { credentials: 'include' });
+        if (response.status === 401) {
+          window.location.href = `${apiBase}/admin-login`;
+          return;
+        }
+
+        const contentType = response.headers.get('content-type') || '';
+        const bodyText = await response.text();
+        const data = contentType.includes('application/json') ? JSON.parse(bodyText) : null;
+
+        if (!contentType.includes('application/json')) {
+          throw new Error('Backend returned HTML instead of JSON. Open the admin at http://localhost:3000/admin and make sure node server is running.');
+        }
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to load messages.');
+        }
+
+        const messages = Array.isArray(data.messages) ? data.messages : [];
+        totalCount.textContent = String(messages.length);
+        latestAt.textContent = messages.length ? fmtDate(messages[messages.length - 1].createdAt) : '-';
+        statusLabel.textContent = 'Online';
+
+        if (!messages.length) {
+          rows.innerHTML = '<tr><td colspan="8" class="empty">No messages yet.</td></tr>';
+          return;
+        }
+
+        rows.innerHTML = messages.map(m => `
+          <tr>
+            <td>${m.id}</td>
+            <td>${esc(m.name)}</td>
+            <td>${esc(m.phone)}</td>
+            <td>${esc(m.email || '-')}</td>
+            <td>${esc(m.service || '-')}</td>
+            <td class="msg">${esc(m.message || '-')}</td>
+            <td>${esc(fmtDate(m.createdAt))}</td>
+            <td><button class="del-btn" data-id="${m.id}">Delete</button></td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        statusLabel.textContent = 'Error';
+        errorBox.textContent = err.message || 'Failed to load messages.';
+        errorBox.style.display = 'block';
+      }
+    }
+
+    rows.addEventListener('click', async (event) => {
+      const button = event.target.closest('.del-btn');
+      if (!button) return;
+
+      const id = button.getAttribute('data-id');
+      if (!id) return;
+
+      if (!window.confirm('Delete this message permanently?')) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`${apiBase}/api/messages/delete`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: Number(id) })
+        });
+
+        if (response.status === 401) {
+          window.location.href = `${apiBase}/admin-login`;
+          return;
+        }
+
+        const contentType = response.headers.get('content-type') || '';
+        const bodyText = await response.text();
+        const result = contentType.includes('application/json') ? JSON.parse(bodyText) : null;
+
+        if (!response.ok) {
+          throw new Error((result && result.error) || 'Failed to delete message.');
+        }
+
+        await loadMessages();
+      } catch (error) {
+        errorBox.textContent = error.message || 'Failed to delete message.';
+        errorBox.style.display = 'block';
+      }
+    });
+
+    document.getElementById('refreshBtn').addEventListener('click', loadMessages);
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await fetch(`${apiBase}/api/admin/logout`, { method: 'POST', credentials: 'include' });
+      window.location.href = `${apiBase}/admin-login`;
+    });
+
+    loadMessages();
+  </script>
+</body>
+</html>

@@ -270,7 +270,7 @@
         const data = contentType.includes('application/json') ? JSON.parse(bodyText) : null;
 
         if (!contentType.includes('application/json')) {
-          throw new Error('Backend returned HTML instead of JSON. Open the admin at http://localhost:3000/admin and make sure node server is running.');
+          throw new Error(`Backend returned HTML instead of JSON from ${apiBase}/api/messages. Check that config.js points to your deployed backend and that the backend URL is live.`);
         }
 
         if (!response.ok) {

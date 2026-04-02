@@ -1,1 +1,1 @@
-window.WEBSITE_API_BASE = "";
+window.WEBSITE_API_BASE = "https://modern-aluminium-manthuka.onrender.com";

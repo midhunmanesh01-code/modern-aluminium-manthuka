@@ -101,6 +101,7 @@ function normalizePath(urlPath) {
 function isAllowedOrigin(origin) {
   if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) return true;
   if (/^https:\/\/[a-z0-9-]+\.github\.io$/i.test(origin)) return true;
+  if (/^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin)) return true;
   if (FRONTEND_ORIGIN && origin.toLowerCase() === FRONTEND_ORIGIN.toLowerCase()) return true;
   return false;
 }

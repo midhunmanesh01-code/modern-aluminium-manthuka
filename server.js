@@ -10,7 +10,10 @@ const PORT = Number(process.env.PORT || 3000);
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'midhun123';
 const SESSION_COOKIE = 'admin_session';
 const SESSION_TOKEN = process.env.ADMIN_SESSION_TOKEN || 'admin-session-midhun';
-const FRONTEND_ORIGIN = String(process.env.FRONTEND_ORIGIN || '').trim();
+const FRONTEND_ORIGINS = String(process.env.FRONTEND_ORIGIN || '')
+  .split(',')
+  .map(origin => origin.trim().toLowerCase())
+  .filter(Boolean);
 const API_HOSTNAME = String(process.env.API_HOSTNAME || '').trim().toLowerCase();
 
 const MIME_TYPES = {
@@ -110,11 +113,35 @@ function isApiHostRequest(req) {
   return host.startsWith('api.');
 }
 
+function buildOriginVariants(origin) {
+  try {
+    const url = new URL(origin);
+    const host = url.hostname.toLowerCase();
+    const hostWithoutWww = host.startsWith('www.') ? host.slice(4) : host;
+    const hostWithWww = host.startsWith('www.') ? host : `www.${host}`;
+    const port = url.port ? `:${url.port}` : '';
+    return [
+      `${url.protocol}//${hostWithoutWww}${port}`,
+      `${url.protocol}//${hostWithWww}${port}`
+    ];
+  } catch {
+    return [String(origin || '').toLowerCase()];
+  }
+}
+
 function isAllowedOrigin(origin) {
+  const normalizedOrigin = String(origin || '').trim().toLowerCase();
+  if (!normalizedOrigin) return false;
+
   if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) return true;
   if (/^https:\/\/[a-z0-9-]+\.github\.io$/i.test(origin)) return true;
   if (/^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin)) return true;
-  if (FRONTEND_ORIGIN && origin.toLowerCase() === FRONTEND_ORIGIN.toLowerCase()) return true;
+
+  for (const configuredOrigin of FRONTEND_ORIGINS) {
+    const variants = buildOriginVariants(configuredOrigin);
+    if (variants.includes(normalizedOrigin)) return true;
+  }
+
   return false;
 }
 

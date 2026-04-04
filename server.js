@@ -135,18 +135,26 @@ async function serveStatic(req, res) {
 
   // For API domains (for example api.example.com), avoid serving website HTML.
   if (isApiHostRequest(req)) {
-    if (pathname === '/index.html') {
+    const isAdminRoute =
+      pathname === '/admin' ||
+      pathname === '/admin.html' ||
+      pathname === '/admin-login' ||
+      pathname === '/config.js';
+
+    if (isAdminRoute) {
+      // Allow admin pages and config on API host.
+    } else if (pathname === '/index.html') {
       return sendJson(res, 200, {
         ok: true,
         service: 'backend',
         message: 'API is running',
         health: '/api/health'
       });
+    } else {
+      return sendJson(res, 404, {
+        error: 'Not found. Use /api/* routes on this domain.'
+      });
     }
-
-    return sendJson(res, 404, {
-      error: 'Not found. Use /api/* routes on this domain.'
-    });
   }
 
   if ((pathname === '/admin' || pathname === '/admin.html') && !isAdminAuthenticated(req)) {

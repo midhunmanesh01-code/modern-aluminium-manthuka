@@ -178,7 +178,7 @@
       <div class="btn-row">
         <button id="refreshBtn">Refresh</button>
         <button id="logoutBtn">Logout</button>
-        <a class="link" href="index.html">Back to Site</a>
+        <a class="link" id="backToSiteLink" href="/">Back to Site</a>
       </div>
     </div>
 
@@ -227,7 +227,9 @@
     const latestAt = document.getElementById('latestAt');
     const statusLabel = document.getElementById('statusLabel');
     const errorBox = document.getElementById('errorBox');
+    const backToSiteLink = document.getElementById('backToSiteLink');
     const configuredApiBase = String(window.WEBSITE_API_BASE || '').trim().replace(/\/$/, '');
+    const configuredFrontendBase = String(window.WEBSITE_FRONTEND_BASE || '').trim().replace(/\/$/, '');
     const apiBase = (
       window.location.protocol === 'file:' ||
       window.location.hostname === 'localhost' ||
@@ -235,6 +237,11 @@
     )
       ? 'http://localhost:3000'
       : (configuredApiBase || window.location.origin);
+
+    const frontendBase = configuredFrontendBase || (configuredApiBase ? '' : window.location.origin);
+    if (frontendBase) {
+      backToSiteLink.href = `${frontendBase}/`;
+    }
 
     if (configuredApiBase && window.location.origin !== configuredApiBase) {
       window.location.href = `${configuredApiBase}/admin`;

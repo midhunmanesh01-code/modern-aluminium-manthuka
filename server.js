@@ -11,6 +11,7 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'midhun123';
 const SESSION_COOKIE = 'admin_session';
 const SESSION_TOKEN = process.env.ADMIN_SESSION_TOKEN || 'admin-session-midhun';
 const FRONTEND_ORIGIN = String(process.env.FRONTEND_ORIGIN || '').trim();
+const API_HOSTNAME = String(process.env.API_HOSTNAME || '').trim().toLowerCase();
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -98,6 +99,17 @@ function normalizePath(urlPath) {
   return urlPath;
 }
 
+function getRequestHostname(req) {
+  return String(req.headers.host || '').split(':')[0].toLowerCase();
+}
+
+function isApiHostRequest(req) {
+  const host = getRequestHostname(req);
+  if (!host) return false;
+  if (API_HOSTNAME && host === API_HOSTNAME) return true;
+  return host.startsWith('api.');
+}
+
 function isAllowedOrigin(origin) {
   if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) return true;
   if (/^https:\/\/[a-z0-9-]+\.github\.io$/i.test(origin)) return true;
@@ -120,6 +132,22 @@ function applyCors(req, res) {
 async function serveStatic(req, res) {
   const url = new URL(req.url, `http://${req.headers.host}`);
   let pathname = normalizePath(url.pathname);
+
+  // For API domains (for example api.example.com), avoid serving website HTML.
+  if (isApiHostRequest(req)) {
+    if (pathname === '/index.html') {
+      return sendJson(res, 200, {
+        ok: true,
+        service: 'backend',
+        message: 'API is running',
+        health: '/api/health'
+      });
+    }
+
+    return sendJson(res, 404, {
+      error: 'Not found. Use /api/* routes on this domain.'
+    });
+  }
 
   if ((pathname === '/admin' || pathname === '/admin.html') && !isAdminAuthenticated(req)) {
     res.writeHead(302, { Location: '/admin-login' });

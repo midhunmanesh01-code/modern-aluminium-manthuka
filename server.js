@@ -133,6 +133,7 @@ function isAllowedOrigin(origin) {
   const normalizedOrigin = String(origin || '').trim().toLowerCase();
   if (!normalizedOrigin) return false;
 
+  if (/^https:\/\/(www\.)?aluminiumfabricationpandalam\.in$/i.test(normalizedOrigin)) return true;
   if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin)) return true;
   if (/^https:\/\/[a-z0-9-]+\.github\.io$/i.test(origin)) return true;
   if (/^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin)) return true;

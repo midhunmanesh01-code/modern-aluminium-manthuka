@@ -58,10 +58,6 @@ function sendJson(res, statusCode, payload) {
   res.end(JSON.stringify(payload));
 }
 
-function setNoIndexHeaders(res) {
-  res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
-}
-
 function parseCookies(req) {
   const cookieHeader = req.headers.cookie || '';
   const out = {};
@@ -218,9 +214,6 @@ async function serveStatic(req, res) {
     const ext = path.extname(filePath).toLowerCase();
     const type = MIME_TYPES[ext] || 'application/octet-stream';
     const data = await fsp.readFile(filePath);
-    if (pathname === '/admin.html') {
-      setNoIndexHeaders(res);
-    }
     res.writeHead(200, { 'Content-Type': type });
     res.end(data);
   } catch {
@@ -388,17 +381,14 @@ async function start() {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Login</title>
-<meta name="robots" content="noindex,nofollow,noarchive">
-<meta name="googlebot" content="noindex,nofollow,noarchive">
 <style>
   body{margin:0;min-height:100vh;display:grid;place-items:center;background:#141414;color:#f7f7f7;font-family:Arial,sans-serif}
   .card{width:min(92vw,380px);background:#1f1f1f;padding:24px;border-radius:12px;border:1px solid #333}
   h1{font-size:1.3rem;margin:0 0 10px}
   p{color:#b5b5b5;font-size:.92rem;line-height:1.5}
-  .password-field{position:relative;margin-top:12px}
-  .password-field input{width:100%;padding:11px 44px 11px 12px;border-radius:8px;border:1px solid #444;font-size:.95rem;background:#121212;color:#fff;margin-top:0}
-  .toggle-password{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:30px;height:30px;border:none;background:transparent;color:#c9a84c;font-size:1rem;cursor:pointer;padding:0;display:grid;place-items:center}
-  button[type="submit"]{width:100%;padding:11px 12px;border-radius:8px;border:1px solid #444;font-size:.95rem;background:#c9a84c;color:#141414;font-weight:700;margin-top:10px;cursor:pointer}
+  input,button{width:100%;padding:11px 12px;border-radius:8px;border:1px solid #444;font-size:.95rem}
+  input{background:#121212;color:#fff;margin-top:12px}
+  button{background:#c9a84c;color:#141414;font-weight:700;margin-top:10px;cursor:pointer}
   .error{display:none;color:#ffb4b4;background:#4f1f1f;border:1px solid #7a3030;padding:10px;border-radius:8px;margin-top:10px}
 </style>
 </head>
@@ -406,28 +396,14 @@ async function start() {
   <form class="card" id="loginForm">
     <h1>Admin Login</h1>
     <p>Enter your admin password to view website messages.</p>
-    <div class="password-field">
-      <input id="password" type="password" placeholder="Password" required>
-      <button type="button" class="toggle-password" id="togglePassword" aria-label="Show password" aria-pressed="false">👁</button>
-    </div>
+    <input id="password" type="password" placeholder="Password" required>
     <button type="submit">Login</button>
     <div class="error" id="errorBox"></div>
   </form>
   <script>
-    const passwordInput = document.getElementById('password');
-    const togglePassword = document.getElementById('togglePassword');
-
-    togglePassword.addEventListener('click', () => {
-      const isHidden = passwordInput.type === 'password';
-      passwordInput.type = isHidden ? 'text' : 'password';
-      togglePassword.textContent = isHidden ? '🙈' : '👁';
-      togglePassword.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
-      togglePassword.setAttribute('aria-pressed', String(isHidden));
-    });
-
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const password = passwordInput.value;
+      const password = document.getElementById('password').value;
       const errorBox = document.getElementById('errorBox');
       errorBox.style.display = 'none';
       try {
@@ -462,7 +438,6 @@ async function start() {
       }
 
       if (req.method === 'GET' && url.pathname === '/admin-login') {
-        setNoIndexHeaders(res);
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
         res.end(loginPage);
         return;

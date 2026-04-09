@@ -7,7 +7,7 @@ const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, 'data');
 const MESSAGES_FILE = path.join(DATA_DIR, 'messages.json');
 const PORT = Number(process.env.PORT || 3000);
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'midhun123';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Midhun#2007';
 const SESSION_COOKIE = 'admin_session';
 const SESSION_TOKEN = process.env.ADMIN_SESSION_TOKEN || 'admin-session-midhun';
 const FRONTEND_ORIGINS = String(process.env.FRONTEND_ORIGIN || '')
@@ -56,6 +56,10 @@ function sendJson(res, statusCode, payload) {
     'Content-Type': 'application/json; charset=utf-8'
   });
   res.end(JSON.stringify(payload));
+}
+
+function setNoIndexHeaders(res) {
+  res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
 }
 
 function parseCookies(req) {
@@ -214,6 +218,9 @@ async function serveStatic(req, res) {
     const ext = path.extname(filePath).toLowerCase();
     const type = MIME_TYPES[ext] || 'application/octet-stream';
     const data = await fsp.readFile(filePath);
+    if (pathname === '/admin.html') {
+      setNoIndexHeaders(res);
+    }
     res.writeHead(200, { 'Content-Type': type });
     res.end(data);
   } catch {
@@ -381,6 +388,8 @@ async function start() {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Login</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="googlebot" content="noindex,nofollow,noarchive">
 <style>
   body{margin:0;min-height:100vh;display:grid;place-items:center;background:#141414;color:#f7f7f7;font-family:Arial,sans-serif}
   .card{width:min(92vw,380px);background:#1f1f1f;padding:24px;border-radius:12px;border:1px solid #333}
@@ -438,6 +447,7 @@ async function start() {
       }
 
       if (req.method === 'GET' && url.pathname === '/admin-login') {
+        setNoIndexHeaders(res);
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
         res.end(loginPage);
         return;

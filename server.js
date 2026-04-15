@@ -153,6 +153,9 @@ function shouldRedirectToCanonical(req, url) {
   const host = getRequestHostname(req);
   if (!host || !CANONICAL_HOST) return false;
 
+  // Never force canonical redirects for API host traffic.
+  if (isApiHostRequest(req)) return false;
+
   const isLocalhost = host === 'localhost' || host === '127.0.0.1';
   if (isLocalhost) return false;
 
@@ -386,10 +389,7 @@ async function handleApi(req, res) {
   return sendJson(res, 404, { error: 'API route not found.' });
 }
 
-async function start() {
-  await ensureStore();
-
-  const loginPage = `<!DOCTYPE html>
+const loginPage = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -438,44 +438,57 @@ async function start() {
 </body>
 </html>`;
 
-  const server = http.createServer(async (req, res) => {
-    try {
-      const url = new URL(req.url, `http://${req.headers.host}`);
+let storeReadyPromise = null;
 
-      if (req.method === 'GET' && shouldRedirectToCanonical(req, url)) {
-        res.writeHead(301, { Location: buildCanonicalUrl(url) });
+function ensureStoreReady() {
+  if (!storeReadyPromise) {
+    storeReadyPromise = ensureStore();
+  }
+  return storeReadyPromise;
+}
+
+async function requestHandler(req, res) {
+  try {
+    await ensureStoreReady();
+    const url = new URL(req.url, `http://${req.headers.host}`);
+
+    if (req.method === 'GET' && shouldRedirectToCanonical(req, url)) {
+      res.writeHead(301, { Location: buildCanonicalUrl(url) });
+      res.end();
+      return;
+    }
+
+    if (url.pathname.startsWith('/api/')) {
+      applyCors(req, res);
+      if (req.method === 'OPTIONS') {
+        res.writeHead(204);
         res.end();
         return;
       }
-
-      if (url.pathname.startsWith('/api/')) {
-        applyCors(req, res);
-        if (req.method === 'OPTIONS') {
-          res.writeHead(204);
-          res.end();
-          return;
-        }
-      }
-
-      if (req.method === 'GET' && url.pathname === '/admin-login') {
-        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-        res.end(loginPage);
-        return;
-      }
-      if (url.pathname.startsWith('/api/')) {
-        await handleApi(req, res);
-      } else {
-        await serveStatic(req, res);
-      }
-    } catch (error) {
-      console.error('Server error:', error);
-      sendJson(res, 500, { error: 'Internal server error.' });
     }
-  });
 
+    if (req.method === 'GET' && url.pathname === '/admin-login') {
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(loginPage);
+      return;
+    }
+
+    if (url.pathname.startsWith('/api/')) {
+      await handleApi(req, res);
+    } else {
+      await serveStatic(req, res);
+    }
+  } catch (error) {
+    console.error('Server error:', error);
+    sendJson(res, 500, { error: 'Internal server error.' });
+  }
+}
+
+if (process.env.VERCEL) {
+  module.exports = requestHandler;
+} else {
+  const server = http.createServer(requestHandler);
   server.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
   });
 }
-
-start();

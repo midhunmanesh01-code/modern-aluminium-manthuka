@@ -1454,13 +1454,11 @@
     ? 'http://localhost:3000'
     : (configuredApiBase || window.location.origin);
 
-  if (configuredApiBase) {
-    const adminHref = `${configuredApiBase}/admin-login`;
-    const adminNavLink = document.getElementById('adminNavLink');
-    const adminFooterLink = document.getElementById('adminFooterLink');
-    if (adminNavLink) adminNavLink.href = adminHref;
-    if (adminFooterLink) adminFooterLink.href = adminHref;
-  }
+  const adminHref = configuredApiBase ? `${configuredApiBase}/admin-login` : '/admin-login';
+  const adminNavLink = document.getElementById('adminNavLink');
+  const adminFooterLink = document.getElementById('adminFooterLink');
+  if (adminNavLink) adminNavLink.href = adminHref;
+  if (adminFooterLink) adminFooterLink.href = adminHref;
 
   // SCROLL TOP
   const scrollTopBtn = document.getElementById('scrollTop');

@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin.html
+Disallow: /admin-login
+Disallow: /api/
 
-Sitemap: https://www.aluminiumfabricationpandalam.in/sitemap.xml
+Sitemap: https://aluminiumfabricationpandalam.in/sitemap.xml

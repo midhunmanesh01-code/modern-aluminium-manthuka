@@ -10,7 +10,6 @@ const PORT = Number(process.env.PORT || 3000);
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'midhun123';
 const SESSION_COOKIE = 'admin_session';
 const SESSION_TOKEN = process.env.ADMIN_SESSION_TOKEN || 'admin-session-midhun';
-const CANONICAL_HOST = String(process.env.CANONICAL_HOST || 'aluminiumfabricationpandalam.in').trim().toLowerCase();
 const FRONTEND_ORIGINS = String(process.env.FRONTEND_ORIGIN || '')
   .split(',')
   .map(origin => origin.trim().toLowerCase())
@@ -22,8 +21,6 @@ const MIME_TYPES = {
   '.css': 'text/css; charset=utf-8',
   '.js': 'application/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
-  '.txt': 'text/plain; charset=utf-8',
-  '.xml': 'application/xml; charset=utf-8',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
@@ -149,23 +146,6 @@ function isAllowedOrigin(origin) {
   return false;
 }
 
-function shouldRedirectToCanonical(req, url) {
-  const host = getRequestHostname(req);
-  if (!host || !CANONICAL_HOST) return false;
-
-  const isLocalhost = host === 'localhost' || host === '127.0.0.1';
-  if (isLocalhost) return false;
-
-  const acceptableHost = host === CANONICAL_HOST;
-  const isHttps = String(req.headers['x-forwarded-proto'] || '').toLowerCase().includes('https');
-
-  return !acceptableHost || !isHttps;
-}
-
-function buildCanonicalUrl(url) {
-  return `https://${CANONICAL_HOST}${url.pathname}${url.search}`;
-}
-
 function applyCors(req, res) {
   const origin = String(req.headers.origin || '');
   if (!origin || !isAllowedOrigin(origin)) return;
@@ -237,7 +217,13 @@ async function serveStatic(req, res) {
     res.writeHead(200, { 'Content-Type': type });
     res.end(data);
   } catch {
-    sendJson(res, 404, { error: 'Not found' });
+    try {
+      const data = await fsp.readFile(path.join(ROOT, 'index.html'));
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(data);
+    } catch {
+      sendJson(res, 404, { error: 'Not found' });
+    }
   }
 }
 
@@ -441,12 +427,6 @@ async function start() {
   const server = http.createServer(async (req, res) => {
     try {
       const url = new URL(req.url, `http://${req.headers.host}`);
-
-      if (req.method === 'GET' && shouldRedirectToCanonical(req, url)) {
-        res.writeHead(301, { Location: buildCanonicalUrl(url) });
-        res.end();
-        return;
-      }
 
       if (url.pathname.startsWith('/api/')) {
         applyCors(req, res);

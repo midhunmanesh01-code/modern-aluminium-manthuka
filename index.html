@@ -1,6 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  (function normalizeCanonicalUrl() {
+    const preferredHost = 'aluminiumfabricationpandalam.in';
+    const isLocal =
+      window.location.protocol === 'file:' ||
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1';
+
+    if (isLocal) {
+      return;
+    }
+
+    const isKnownHost =
+      window.location.hostname === preferredHost ||
+      window.location.hostname === `www.${preferredHost}`;
+
+    if (!isKnownHost) {
+      return;
+    }
+
+    const normalizedPath = window.location.pathname === '/index.html' ? '/' : window.location.pathname;
+    const needsRedirect =
+      window.location.protocol !== 'https:' ||
+      window.location.hostname !== preferredHost ||
+      normalizedPath !== window.location.pathname;
+
+    if (needsRedirect) {
+      const target = `https://${preferredHost}${normalizedPath}${window.location.search}${window.location.hash}`;
+      window.location.replace(target);
+    }
+  })();
+</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BNXG6G49R6"></script>
 <script>
   window.dataLayer = window.dataLayer || [];

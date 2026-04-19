@@ -172,7 +172,9 @@ async function serveStatic(req, res) {
     if (isAdminRoute) {
       // Allow admin pages and config on API host.
     } else if (pathname === '/' || pathname === '/index.html') {
-      res.writeHead(302, { Location: '/admin-login' });
+      const scheme = isSecureRequest(req) ? 'https' : 'http';
+      const host = req.headers.host;
+      res.writeHead(302, { Location: `${scheme}://${host}/admin-login` });
       res.end();
       return;
     } else {

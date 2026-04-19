@@ -1547,7 +1547,7 @@
     ? 'http://localhost:3000'
     : (configuredApiBase || window.location.origin);
 
-  const adminHref = configuredApiBase ? `${configuredApiBase}/admin-login` : '/admin-login';
+  const adminHref = configuredApiBase || '/admin-login';
   const adminNavLink = document.getElementById('adminNavLink');
   const adminFooterLink = document.getElementById('adminFooterLink');
   if (adminNavLink) adminNavLink.href = adminHref;

@@ -4,4 +4,4 @@ Disallow: /admin.html
 Disallow: /admin
 Disallow: /admin-login
 
-Sitemap: https://aluminiumfabricationpandalam.in/sitemap.xml
+Sitemap: https://www.aluminiumfabricationpandalam.in/sitemap.xml

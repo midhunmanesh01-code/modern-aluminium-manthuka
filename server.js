@@ -171,13 +171,10 @@ async function serveStatic(req, res) {
 
     if (isAdminRoute) {
       // Allow admin pages and config on API host.
-    } else if (pathname === '/index.html') {
-      return sendJson(res, 200, {
-        ok: true,
-        service: 'backend',
-        message: 'API is running',
-        health: '/api/health'
-      });
+    } else if (pathname === '/' || pathname === '/index.html') {
+      res.writeHead(302, { Location: '/admin-login' });
+      res.end();
+      return;
     } else {
       return sendJson(res, 404, {
         error: 'Not found. Use /api/* routes on this domain.'

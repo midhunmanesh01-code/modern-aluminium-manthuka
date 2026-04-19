@@ -110,7 +110,7 @@ function isApiHostRequest(req) {
   const host = getRequestHostname(req);
   if (!host) return false;
   if (API_HOSTNAME && host === API_HOSTNAME) return true;
-  return host.startsWith('api.');
+  return host.startsWith('api.') || host.startsWith('www.api.');
 }
 
 function buildOriginVariants(origin) {

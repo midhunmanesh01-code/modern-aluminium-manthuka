@@ -1608,7 +1608,7 @@
         <li><a href="#reviews">Reviews</a></li>
         <li><a href="#why">Why Choose Us</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a href="admin.html" id="adminFooterLink">Admin Login</a></li>
+        <li><a href="https://api.aluminiumfabricationpandalam.in/admin-login">Admin Login</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -1645,7 +1645,7 @@
     ? 'http://localhost:3000'
     : (configuredApiBase || window.location.origin);
 
-  const adminHref = configuredApiBase ? `${configuredApiBase}/admin` : 'https://api.aluminiumfabricationpandalam.in/admin';
+  const adminHref = configuredApiBase ? `${configuredApiBase}/admin-login` : 'https://api.aluminiumfabricationpandalam.in/admin-login';
   const adminNavLink = document.getElementById('adminNavLink');
   const adminFooterLink = document.getElementById('adminFooterLink');
   if (adminNavLink) adminNavLink.href = adminHref;

@@ -1645,7 +1645,7 @@
     ? 'http://localhost:3000'
     : (configuredApiBase || window.location.origin);
 
-  const adminHref = configuredApiBase ? `${configuredApiBase}/admin` : '/admin-login';
+  const adminHref = configuredApiBase ? `${configuredApiBase}/admin` : 'https://api.aluminiumfabricationpandalam.in/admin';
   const adminNavLink = document.getElementById('adminNavLink');
   const adminFooterLink = document.getElementById('adminFooterLink');
   if (adminNavLink) adminNavLink.href = adminHref;
